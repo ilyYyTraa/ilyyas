@@ -413,13 +413,13 @@ const playlist = [
     {
         title: "Sekian Terimakasih",
         artist: "Lealona dan The Jeblogs",
-        src: "SpotiDown.App - Sekian_ Terima Kasih - Lealona.mp3"
+        src: "SpotiDown.App - Sekian_ Terima Kasih - Lealona.mp3",
         cover : "cover1.jpg"
     },
     {
         title: "Treat Your Better",
         artist: "Shawm Mandes",
-        src: ""
+        src: "SpotiDown.App - Treat You Better - Shawn Mendes.mp3",
         cover : "cover2.jpg"
     }
 ];
@@ -434,6 +434,7 @@ const progress = document.getElementById("progress");
 function loadSong(index) {
     const song = playlist[index];
     music.src = song.src;
+    cover.src = song.cover;
     document.getElementById("songTitle").textContent = song.title;
     document.getElementById("artistName").textContent = song.artist;
     progress.value = 0;
