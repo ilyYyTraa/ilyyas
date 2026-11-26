@@ -292,20 +292,20 @@
     <!-- FOOTER -->
     
 <style>
-.music-section {
+    .music-section {
     padding: 35px 15px;
     text-align: center;
-    background: #e8f3ff;
+    background: transparent;
 }
-
-.music-card {
+ .music-card {
     max-width: 330px;
     margin: auto;
     padding: 22px;
-    background: #171923;
-    color: white;
+    background: linear-gradient(145deg, #172033, #0f172a);
+    color: #f1f5f9;
     border-radius: 22px;
-    box-shadow: 0 10px 30px #0003;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 30px #0008;
 }
 
 .album-cover {
@@ -314,7 +314,7 @@
     margin: auto;
     border-radius: 50%;
     overflow: hidden;
-    border: 6px solid #333;
+    border: 6px solid #64748b;
     animation: rotateAlbum 10s linear infinite;
     animation-play-state: paused;
 }
@@ -335,7 +335,7 @@
 
 .song-info {
     text-align: left;
-    margin: 22px 0;
+    margin: 22px;
 }
 
 .song-info h3 {
@@ -346,9 +346,10 @@
     color: #aaa;
 }
 
-.music-progress input {
+ .music-progress input {
     width: 100%;
-    accent-color: #1db954;
+    accent-color: #cbd5e1;
+    
 }
 
 .music-time {
@@ -375,16 +376,19 @@
 }
 
 .music-controls .play-button {
-    background: #1db954;
+    background: #cbd5e1;
+    color: #0f172a;
     width: 58px;
     height: 58px;
     border-radius: 50%;
+
 }
 
 .music-label {
-    color: #1db954;
+    color: #94a3b8;
     font-size: 11px;
     letter-spacing: 3px;
+
 }
 </style>
 
