@@ -272,6 +272,237 @@
     </section>
 
     <!-- FOOTER -->
+    
+<style>
+.music-section {
+    padding: 35px 15px;
+    text-align: center;
+    background: #e8f3ff;
+}
+
+.music-card {
+    max-width: 330px;
+    margin: auto;
+    padding: 22px;
+    background: #171923;
+    color: white;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px #0003;
+}
+
+.album-cover {
+    width: 210px;
+    height: 210px;
+    margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #333;
+    animation: rotateAlbum 10s linear infinite;
+    animation-play-state: paused;
+}
+
+.album-cover.playing {
+    animation-play-state: running;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes rotateAlbum {
+    to { transform: rotate(360deg); }
+}
+
+.song-info {
+    text-align: left;
+    margin: 22px 0;
+}
+
+.song-info h3 {
+    margin: 0;
+}
+
+.song-info p {
+    color: #aaa;
+}
+
+.music-progress input {
+    width: 100%;
+    accent-color: #1db954;
+}
+
+.music-time {
+    display: flex;
+    justify-content: space-between;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin: 20px 0;
+}
+
+.music-controls button {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.music-controls .play-button {
+    background: #1db954;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+}
+
+.music-label {
+    color: #1db954;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+</style>
+
+<section class="music-section">
+    <h2>Our Music 🎵</h2>
+    <p>Music and Memories of Our Class</p>
+
+    <div class="music-card">
+
+        <div class="album-cover" id="albumCover">
+            <img src="cover.jpg" alt="Cover Lagu">
+        </div>
+
+        <div class="song-info">
+            <h3 id="songTitle">Judul Lagu</h3>
+            <p id="artistName">Nama Penyanyi</p>
+        </div>
+
+        <audio id="myMusic"></audio>
+
+        <div class="music-progress">
+            <input type="range" id="progress"
+                   value="0" min="0" max="100">
+
+            <div class="music-time">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="music-controls">
+            <button onclick="prevSong()">|◀</button>
+            <button class="play-button" id="playBtn"
+                    onclick="toggleMusic()">▶</button>
+            <button onclick="nextSong()">▶|</button>
+        </div>
+
+        <p class="music-label">♫ NOW PLAYING</p>
+    </div>
+</section>
+
+<script>
+const playlist = [
+    {
+        title: "Sekian Terimakasih",
+        artist: "Lealona dan The Jeblogs",
+        src: "lagu.mp3"
+    },
+    {
+        title: "Lagu Kedua",
+        artist: "Penyanyi Kedua",
+        src: "lagu2.mp3"
+    }
+];
+
+let songIndex = 0;
+
+const music = document.getElementById("myMusic");
+const playBtn = document.getElementById("playBtn");
+const cover = document.getElementById("albumCover");
+const progress = document.getElementById("progress");
+
+function loadSong(index) {
+    const song = playlist[index];
+    music.src = song.src;
+    document.getElementById("songTitle").textContent = song.title;
+    document.getElementById("artistName").textContent = song.artist;
+    progress.value = 0;
+    document.getElementById("currentTime").textContent = "0:00";
+    document.getElementById("duration").textContent = "0:00";
+}
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play().catch(() => {
+            alert("Lagu belum bisa diputar. Periksa file MP3 kamu.");
+        });
+    } else {
+        music.pause();
+    }
+}
+
+function nextSong() {
+    songIndex = (songIndex + 1) % playlist.length;
+    loadSong(songIndex);
+    music.play();
+}
+
+function prevSong() {
+    songIndex = (songIndex - 1 + playlist.length) % playlist.length;
+    loadSong(songIndex);
+    music.play();
+}
+
+music.addEventListener("play", () => {
+    playBtn.textContent = "Ⅱ";
+    cover.classList.add("playing");
+});
+
+music.addEventListener("pause", () => {
+    playBtn.textContent = "▶";
+    cover.classList.remove("playing");
+});
+
+music.addEventListener("ended", nextSong);
+
+music.addEventListener("loadedmetadata", () => {
+    document.getElementById("duration").textContent =
+        formatTime(music.duration);
+});
+
+music.addEventListener("timeupdate", () => {
+    progress.value = music.duration
+        ? (music.currentTime / music.duration) * 100 : 0;
+
+    document.getElementById("currentTime").textContent =
+        formatTime(music.currentTime);
+});
+
+progress.addEventListener("input", () => {
+    if (music.duration) {
+        music.currentTime =
+            (progress.value / 100) * music.duration;
+    }
+});
+
+function formatTime(time) {
+    if (!Number.isFinite(time)) return "0:00";
+    const min = Math.floor(time / 60);
+    const sec = Math.floor(time % 60);
+    return min + ":" + String(sec).padStart(2, "0");
+}
+
+loadSong(songIndex);
+</script>
+    
     <footer>
         <p>©️ 2026 Kelas X 4</p>
         <p>Website Biodata Kelas</p>
